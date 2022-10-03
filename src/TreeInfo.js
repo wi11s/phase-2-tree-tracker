@@ -1,3 +1,4 @@
+import { IDLE_NAVIGATION } from '@remix-run/router'
 import React, {useState} from 'react'
 
 export default function TreeInfo({info}) {
@@ -5,7 +6,8 @@ export default function TreeInfo({info}) {
   return (
     <div>
         <h1>{info['spc_common']}</h1>
-        <h2></h2>
+        <a href={info.wiki} target="_blank" rel="noopener noreferrer">More Info</a>
+        <img src={info.image}/>
     </div>
   )
 }
