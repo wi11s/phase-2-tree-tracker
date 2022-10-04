@@ -89,7 +89,7 @@ export default function AddTree() {
 
 
   return (
-    <div>
+    <main>
         <h1>Form</h1>
         <form onSubmit={handleSubmit}>
             <label>Use Custom Location</label>
@@ -104,6 +104,6 @@ export default function AddTree() {
         </form>
 
         {formThere ? <ManualForm/> : null}
-    </div>
+    </main>
   )
 }
