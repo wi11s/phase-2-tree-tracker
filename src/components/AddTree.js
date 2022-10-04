@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import ManualForm from './ManualForm';
 
-export default function Form() {
+export default function AddTree() {
 
     const apiKey = process.env.REACT_APP_PLANT_KEY
     const [newTree, setNewTree] = useState({})
@@ -25,8 +25,6 @@ export default function Form() {
           );
         }
       }
-
-
 
 
 
