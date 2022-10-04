@@ -35,7 +35,7 @@ img{
 .header{
     position: fixed;
     width: 100%;
-    background-color: #fff;
+    background-color: transparent;
     top: 0;
     left: 0;
     z-index: 100;
@@ -268,31 +268,111 @@ a{
 .add-tree{
     display: flex;
     height: 100vh;
-    align-items: center;
     justify-content: center;
-}
-
-.add-tree h1{
-    font-family: var(--main-font);
-    font-weight: var(--extra-bold);
-    color: var(--main-color);
-    font-size: 35px;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
+    align-items: center;
 }
 
 .form-container{
-    display: flex;
-    flex-direction: column;
+    max-width: 350px;
+    width: 100%;
+    padding: 25px 30px 16px;
     border: 1px solid #3d4637;
     border-radius: 10px;
-    padding: 20px 30px;
 }
 
-.input{
-    margin-bottom: 20px;
+.add-tree .title{
+    font-family: var(--main-font);
+    font-weight: var(--bold);
+    color: var(--main-color);
+    font-size: 30px;
 }
 
-.file{
-    
+.form-container form .details{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+hr{
+    height: 1px;
+    margin-top: 15px;
+    margin-bottom: 18px;
+    border: none;
+    background-color: var(--main-color);
+}
+
+.details .input-box{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.details .upload-img{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.details .input-box input{
+    height: 30px;
+    width: 285px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #3d4637;
+    padding-left: 10px;
+    font-family: var(--main-font);
+    font-size: 12px;
+}
+
+.add-tree .sub-head {
+    font-family: var(--main-font);
+    font-weight: var(--bold);
+    font-size: 18px;
+}
+
+form .submitBtn{
+    height: 45px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+form .submitBtn input{
+    height: 100%;
+    width: 285px;
+    outline: none;
+    border: none;
+    background-color: var(--main-color);
+    color: #fff;
+    font-family: var(--main-font);
+    font-weight: var(--medium);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+form .submitBtn input:hover{
+    transform: translateY(-1.5px);
+}
+
+.manual-input button{
+    font-family: var(--main-font);
+    color: var(--main-color);
+    font-weight: var(--medium);
+    font-size: 15px;
+    text-align: center;
+    border: none;
+    background-color: #fff;
+    border-bottom: 1px solid #3d4637;
+    cursor: pointer;
+}
+
+.check-box{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.add-tree .details .check-box input{
+    width: 13px;
 }

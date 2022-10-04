@@ -1,60 +1,53 @@
 import React, {useState} from 'react'
+import { motion } from 'framer-motion'
 
-export default function ManualForm() {
+export default function ManualForm({setIsManual}) {
 
+    return (
+      <main className='add-tree'>
+      <motion.div className='form-container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
+        <div className='title'>MANUAL INPUT</div>
+        <hr></hr>
+        <form>
+          <div className="details">
+            <div className="input-box">
+              <span className='sub-head'>Name</span>
+              <input type='text' placeholder='Enter Tree Name' />
+            </div>
 
-  const [name, setName] = useState('')
-  const [image, setImage] = useState('')
-  const [lat, setLat] = useState('')
-  const [lng, setLng] = useState('')
-  const [wiki, setWiki] = useState('')
+            <div className="input-box">
+              <span className='sub-head'>Wiki Link</span>
+              <input type='text' placeholder='Enter Wiki Link' />
+            </div>
 
+            <div className="input-box">
+              <span className='sub-head'>Lat</span>
+              <input type='text' placeholder='Enter Lat' />
+            </div>
 
+            <div className="input-box">
+              <span className='sub-head'>Lng</span>
+              <input type='text' placeholder='Enter Lng' />
+            </div>
 
-    function handleClick() {
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-              console.log(pos);
-            }
-          );
-        }
-      };
+            <div className="upload-img">
+              <span className='sub-head'>Upload Image</span>
+              <input type='file' />
+            </div>
 
-      function handleSubmit() {
-        let newTree = {
-          spc_common: name,
-          wiki: wiki,
-          image: image,
-          position: {
-            lat: lat,
-            lng: lng,
-          }
-        }
-        fetch('http://localhost:3000/trees', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newTree)
-        })
-      }
+            <div className='submitBtn'>
+              <input type="submit" value='Submit'/>
+            </div>
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
-        <input type="text" placeholder="Wiki Link" onChange={(e) => setWiki(e.target.value)} />
-        <input type="text" placeholder="lat" onChange={(e) => setLat(e.target.value)} />
-        <input type="text" placeholder="lng" onChange={(e) => setLng(e.target.value)} />
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        <input type='submit'/>
-      </form>
-    </div>
-  )
+            <div className='manual-input'>
+              <button type='button' onClick={() => setIsManual(false)}>
+                Go Back
+              </button>
+              </div>
+          </div>
+        </form>
+      </motion.div>
+    </main>
+    )
+  
 }
