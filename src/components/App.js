@@ -1,29 +1,28 @@
-import React from 'react'; 
-import {Route, Switch} from 'react-router-dom';
+
+import './App.css';
+import {Routes, Route, Link } from "react-router-dom"
+// import { BrowserRouter as Router } from 'react-router-dom';
+import Home from './Home';
 import Header from './Header';
 import Footer from './Footer';
-import Home from './Home';
 import Map from './Map';
-import Form from './Form';
+import Error from './Error';
+import AddTree from './AddTree';
+
 
 function App() {
-    return (
-        <div>
-            <Header />
-            <Switch>
-                <Route exact path='/'>
-                    <Home />
-                </Route>
-                <Route exact path='/map'>
-                    <Map />
-                </Route>
-                <Route exact path='/form'>
-                    <Form />
-                </Route>
-            </Switch>
-            <Footer />
-        </div>
-    )
+  return (
+    <div className="App">
+      <Header/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="map" element={<Map />} />
+        <Route path="addtree" element={<AddTree />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

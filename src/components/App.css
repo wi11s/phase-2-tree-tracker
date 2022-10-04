@@ -174,12 +174,22 @@ img{
     margin-bottom: 10px;
 }
 
+.form h1{
+    font-family: var(--main-font);
+    font-weight: var(--extra-bold);
+    color: var(--main-color);
+    font-size: 30px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
 .feature{
     display: flex;
     column-gap: 20px;
 }
 
 .map-container{
+    position: relative;
     width: 75vw;
     height: 60vh;
     border-radius: 15px;
@@ -220,6 +230,14 @@ h4{
     margin-bottom: 5px;
 }
 
+a{
+    font-family: var(--main-font);
+    font-weight: var(--bold);
+    color: blue;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
 .card p{
     font-family: var(--main-font);
     font-weight: var(--regular);
@@ -243,4 +261,38 @@ h4{
 
 .image-container:hover img{
     transform: scale(1.025);
+}
+
+/* ================= Add Tree ================= */
+
+.add-tree{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-tree h1{
+    font-family: var(--main-font);
+    font-weight: var(--extra-bold);
+    color: var(--main-color);
+    font-size: 35px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #3d4637;
+    border-radius: 10px;
+    padding: 20px 30px;
+}
+
+.input{
+    margin-bottom: 20px;
+}
+
+.file{
+    
 }

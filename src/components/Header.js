@@ -19,7 +19,7 @@ function Header() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to='/form' exact className='link' activeStyle={{borderBottom: '1.5px solid #3d4637', paddingBottom:"5px"}}>
+                        <NavLink to='/addtree' exact className='link' activeStyle={{borderBottom: '1.5px solid #3d4637', paddingBottom:"5px"}}>
                         Add Tree
                         </NavLink>
                     </li>
