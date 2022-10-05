@@ -6,20 +6,20 @@ function Header() {
     return(
         <header className='header'>
             <nav className='nav'>
-                <NavLink to='/' exact><img src={logo} alt='logo' /></NavLink>              
+                <NavLink to='/' end><img src={logo} alt='logo' /></NavLink>              
                 <ul className='menu'>
                     <li>
-                        <NavLink to='/' exact className='link' activeStyle={{borderBottom: '1.5px solid #3d4637', paddingBottom:"5px"}}>
+                        <NavLink to='/' end className='link' style={({ isActive }) => ({borderBottom: isActive? '1.5px solid #3d4637' : null, paddingBottom: isActive ? "5px" : null})}>
                         Home
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to='/map' exact className='link' activeStyle={{borderBottom: '1.5px solid #3d4637', paddingBottom:"5px"}}>
+                        <NavLink to='/map' end className='link' style={({ isActive }) => ({borderBottom: isActive? '1.5px solid #3d4637' : null, paddingBottom: isActive ? "5px" : null})}>
                         Map
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to='/addtree' exact className='link' activeStyle={{borderBottom: '1.5px solid #3d4637', paddingBottom:"5px"}}>
+                        <NavLink to='/addtree' end className='link' style={({ isActive }) => ({borderBottom: isActive? '1.5px solid #3d4637' : null, paddingBottom: isActive ? "5px" : null})}>
                         Add Tree
                         </NavLink>
                     </li>

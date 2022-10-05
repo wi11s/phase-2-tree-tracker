@@ -4,7 +4,14 @@ import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 
 function Home() {
-    return (
+
+  
+
+    
+  
+  
+  
+  return (
         <main className='home'>
             <motion.div className='home-container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}} >
                 <h1>ALL ABOUT TREE</h1>

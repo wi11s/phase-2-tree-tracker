@@ -1,23 +1,45 @@
 import { IDLE_NAVIGATION } from '@remix-run/router'
 import React, {useState} from 'react'
 
-export default function TreeInfo({info}) {
-    console.log(info)
+export default function TreeInfo({info, handleChange}) {
+  // console.log(info, info.image)
+  const imageExists = info.image !== undefined
+  const [description, setDescription] = useState('');
+  const [wikiLink, setWikiLink] = useState('')
+  const [wikiImage, setWikiImage] = useState('')
+
+  const wiki = require('wikipedia');
+
+  (async () => {
+    try {
+      const page = await wiki.page(info['spc_common']);
+      const summary = await page.summary();
+      setDescription(`${summary.extract.slice(0, 200)} . . .`)
+      // console.log(summary)
+      setWikiLink(summary['content_urls'].desktop.page)
+      if (info['spc_common']==="black oak") {
+        setWikiImage('https://upload.wikimedia.org/wikipedia/commons/e/e1/Quercus_velutina_001.jpg')
+      } else {
+        setWikiImage(summary.thumbnail.source)
+      }
+      
+    } catch (error) {
+      console.log(error);
+
+    }
+  })();
+
   return (
     <div>
         <div className='details'>{info['spc_common']}</div>
         <div className="details">
-          <h4>Health</h4>
-          <p>Good</p>
-        </div>
-        <div className="details">
           <h4>Description</h4>
-          <p>The largest species in its genus but is not closely related to the true oaks, Quercus. It is a native of eastern coastal Australia, growing in riverine, subtropical and dry rainforest environments.</p>
-          <a href={info.wiki} target="_blank" rel="noopener noreferrer">More Info</a>
+          <p>{description}</p>
+          <a href={imageExists? info.wiki : wikiLink} target="_blank" rel="noopener noreferrer">More Info</a>
         </div>
 
         <div className="image-container">
-          <img src={info.image} alt='image'/>
+          <img src={imageExists ? info.image : wikiImage} alt='image'/>
         </div>
     </div>
   )
