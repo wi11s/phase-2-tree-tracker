@@ -10,6 +10,7 @@ import Footer from './Footer';
 import Map from './Map';
 import Error from './Error';
 import AddTree from './AddTree';
+import Progress from './Progress';
 import { useNavigate } from 'react-router-dom'
 
 
@@ -57,7 +58,7 @@ function App() {
   const apiKey = process.env.REACT_APP_PLANT_KEY
 
   const [showTreeInfo, setShowTreeInfo] = useState(false)
-  const [treeInfo, setTreeInfo] = useState({spc_common: ''})
+  const [treeInfo, setTreeInfo] = useState({spc_common: '', userAdded: true})
   const [newTree, setNewTree] = useState({})
   // const [newTreeByName, setNewTreeByName] = useState({})
 
@@ -76,8 +77,6 @@ function App() {
   function handleNameChange(e) {
     setName(e.target.value)
   }
-
-
 
   (async () => {
     try {
@@ -99,7 +98,6 @@ function App() {
   })();
 
   
-
   function idPost(base64files) {
     fetch('https://api.plant.id/v2/identify', {
       method: 'POST',
@@ -160,7 +158,7 @@ function App() {
         navigate('/map')
         setCenter(pos)
         setZoom(16)
-        setTreeInfo({spc_common: obj['spc_common'], wiki: obj.wiki, image: obj.image})
+        setTreeInfo({spc_common: obj['spc_common'], wiki: obj.wiki, image: obj.image, userAdded: true})
   
         setShowTreeInfo(true)
       })
@@ -206,7 +204,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="map" element={<Map center={center} zoom={zoom} showTreeInfo={showTreeInfo} setShowTreeInfo={setShowTreeInfo} treeInfo={treeInfo} setTreeInfo={setTreeInfo}/>} />
-        <Route path="addtree" element={<AddTree handleSubmit={handleSubmit} encodeImageFileAsURL={encodeImageFileAsURL} pos={pos} handleNameChange={handleNameChange} useCustomLocation={useCustomLocation} setUseCustomLocation={setUseCustomLocation} handleLatChange={handleLatChange} handleLngChange={handleLngChange}/>}/>
+        <Route path="addtree" element={<AddTree handleSubmit={handleSubmit} encodeImageFileAsURL={encodeImageFileAsURL} pos={pos} handleNameChange={handleNameChange} setUseCustomLocation={setUseCustomLocation} handleLatChange={handleLatChange} handleLngChange={handleLngChange}/>}/>
+        <Route path="progress" element={<Progress />}/>
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />

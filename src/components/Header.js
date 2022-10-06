@@ -23,6 +23,11 @@ function Header() {
                         Add Tree
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to='/progress' end className='link' style={({ isActive }) => ({borderBottom: isActive? '1.5px solid #3d4637' : null, paddingBottom: isActive ? "5px" : null})}>
+                        Progress
+                        </NavLink>
+                    </li>
                 </ul>
             </nav>
         </header>

@@ -17,8 +17,8 @@ function Home() {
                 <h1>ALL ABOUT TREE</h1>
                 <img src={banner} alt='banner' />
                 <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit culpa aspernatur velit tenetur suscipit. <br/>
-                tempora incidunt et, illo laborum eveniet nesciunt quibusdam debitis.
+                A new way to explore your city and appretiate it's not-so-hidden gems. Easily identify trees, and keep track of your progress.<br/>
+                We've got you started with one thousand trees. You've got it from here.
                 </p>
                 <NavLink to='/map' exact className='button'>Explore Map</NavLink>
             </motion.div>           

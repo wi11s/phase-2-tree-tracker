@@ -1,12 +1,14 @@
 import { IDLE_NAVIGATION } from '@remix-run/router'
 import React, {useState} from 'react'
 
-export default function TreeInfo({info, handleChange}) {
+export default function TreeInfo({info, handleClick}) {
   // console.log(info, info.image)
   const imageExists = info.image !== undefined
   const [description, setDescription] = useState('');
   const [wikiLink, setWikiLink] = useState('')
   const [wikiImage, setWikiImage] = useState('')
+  const [idToDelete, setIdToDelete] = useState(-1)
+
 
   const wiki = require('wikipedia');
 
@@ -25,9 +27,10 @@ export default function TreeInfo({info, handleChange}) {
       
     } catch (error) {
       console.log(error);
-
     }
   })();
+
+
 
   return (
     <div>
@@ -41,6 +44,7 @@ export default function TreeInfo({info, handleChange}) {
         <div className="image-container">
           <img src={imageExists ? info.image : wikiImage} alt='image'/>
         </div>
+        {info.userAdded ? <button onClick={() => handleClick(info.id)}>X</button> : null}
     </div>
   )
 }
