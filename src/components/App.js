@@ -30,7 +30,6 @@ function App() {
 
   let pos;
   function getLocation() {
-    console.log(pos)
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {

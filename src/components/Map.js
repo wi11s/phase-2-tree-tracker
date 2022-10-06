@@ -5,8 +5,6 @@ import { useInRouterContext } from "react-router-dom";
 import { motion } from 'framer-motion'
 
 
-// const center = { lat: 40.74, lng: -73.90 }
-
 export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeInfo, setTreeInfo}) {
 
 
@@ -24,7 +22,7 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     .then((res) => res.json())
     .then(obj => {
       // console.log(obj.length)
-      setTrees(obj)
+      setTrees(obj.filter(t => t['spc_common'] !== undefined))
     })
   }, [setTrees])
 
@@ -79,6 +77,42 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     setTreeInfo({spc_common: tree['spc_common'], wiki: tree.wiki, image: tree.image})
   }
 
+  
+
+  const treeOptions = trees.filter((item, index) => index === trees.indexOf(trees.find(tree => tree['spc_common'] === item['spc_common'])))
+  const userTreeOptions = userTrees.filter((item, index) => index === userTrees.indexOf(userTrees.find(tree => tree['spc_common'] === item['spc_common'])))
+  // console.log(userTreeOptions)
+
+
+  const [filterBy, setFilterBy] = useState('')
+
+  let displayTrees = trees.filter((tree) => {
+    console.log(tree['spc_common'].toLowerCase().includes('honeylocust'))
+    return (tree['spc_common'].toLowerCase().includes(filterBy.toLowerCase()))
+  })
+  console.log(displayTrees)
+  // console.log(trees.filter(tree => tree['spc_common'].toLowerCase().includes('g')))
+
+  function handleOriginalSelectChange(e) {
+    console.log(e.target.value)
+
+    if (e.target.value === 'ALL') {
+      setFilterBy(null)
+    } else {
+      setFilterBy(e.target.value)
+    }
+
+  }
+  
+  function handleUserSelectChange(e) {
+    // console.log(e.target.value)
+    if (e.target.value === 'ALL') {
+      setFilterBy('')
+    } else {
+      setFilterBy(e.target.value)
+    }
+  }
+
 
   if (!isLoaded) {
     return <p>loading</p>
@@ -87,10 +121,26 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     <main className="map">
       <motion.div className='container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
         <h1>EXPLORE MAP</h1>
+        <label>Original Trees</label>
+        <select onChange={handleOriginalSelectChange} type='select'>
+          <option value='all'>ALL</option>
+          <option value='none'>NONE</option>
+          {treeOptions.map(tree => {
+            return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
+          })}
+        </select>
+        <label>Your Trees</label>
+        <select onChange={handleUserSelectChange} type='select'>
+          <option value='all'>ALL</option>
+          <option value='none'>NONE</option>
+          {userTreeOptions.map(tree => {
+              return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
+            })}
+        </select>
         <div className="feature">
           <div className={`map-container ${showTreeInfo ? '' : 'map-container-full'}`}>
           <GoogleMap center={center} zoom={zoom} mapContainerStyle={{ width: '100%', height: '100%'}}>
-              {trees.map(tree => {           
+              {displayTrees.map(tree => {           
                 if (tree['spc_common']) {
                   return (
                     <Marker onClick={() => handleClick(tree)} key={tree["tree_id"]} position={{ lat:parseFloat(tree.latitude), lng:parseFloat(tree.longitude)}} icon={{url:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}}/>
