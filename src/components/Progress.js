@@ -27,7 +27,7 @@ export default function ({ treeOptions, trees}) {
 
   return (
     <div>
-        <h1>{points}/{total}</h1>
+        <h1>You've identifies {points}/{total} species of trees</h1>
         {treeOptions.map(tree => {
             return (
                 <TreeType key={tree['spc_common']} tree={tree} trees={trees} userTreesArray={userTreesArray}/>

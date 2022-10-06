@@ -18,7 +18,7 @@ function Home() {
                 <img src={banner} alt='banner' />
                 <p>
                 A new way to explore your city and appretiate its not-so-hidden gems. Easily identify trees, and keep track of your progress.<br/>
-                We've got you started with one thousand trees (39 species); you've got it from here. Go make the city a forest.
+                We've got you started with one thousand trees (39 species). Identify these species yourself, and discover new ones; you've got it from here. 
                 </p>
                 <NavLink to='/map' exact className='button'>Explore Map</NavLink>
             </motion.div>           
