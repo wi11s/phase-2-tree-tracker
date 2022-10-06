@@ -202,7 +202,7 @@ img{
 
 .card{
     width: 25vw;
-    height: 60vh;
+    min-height: 60vh;
     border-radius: 15px;
     padding: 20px 25px;
     border: 1px solid #3d4637;
@@ -230,12 +230,13 @@ h4{
     margin-bottom: 5px;
 }
 
-a{
+.moreInfo a{
     font-family: var(--main-font);
-    font-weight: var(--bold);
-    color: blue;
-    font-size: 15px;
+    font-weight: var(--medium);
+    color: var(--main-color);
+    font-size: 13px;
     margin-bottom: 5px;
+    border-bottom: 1px solid #3d4637;
 }
 
 .card p{
@@ -252,7 +253,7 @@ a{
 .image-container img{
     display: block;
     width: 100%;
-    min-height: 200px;
+    min-height: 150px;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     object-position: center;   
@@ -273,7 +274,7 @@ a{
 }
 
 .form-container{
-    max-width: 350px;
+    max-width: 290px;
     width: 100%;
     padding: 25px 30px 16px;
     border: 1px solid #3d4637;
@@ -311,18 +312,7 @@ hr{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 15px;
-}
-
-.details .input-box input{
-    height: 30px;
-    width: 285px;
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #3d4637;
-    padding-left: 10px;
-    font-family: var(--main-font);
-    font-size: 12px;
+    margin-top: 12px;
 }
 
 .add-tree .sub-head {
@@ -339,7 +329,7 @@ form .submitBtn{
 
 form .submitBtn input{
     height: 100%;
-    width: 285px;
+    width: 227px;
     outline: none;
     border: none;
     background-color: var(--main-color);
@@ -352,7 +342,7 @@ form .submitBtn input{
 }
 
 form .submitBtn input:hover{
-    transform: translateY(-1.5px);
+    transform: scale(1.025);
 }
 
 .manual-input button{
@@ -375,4 +365,22 @@ form .submitBtn input:hover{
 
 .add-tree .details .check-box input{
     width: 13px;
+}
+
+.inputStyle{
+    height: 30px;
+    width: 227px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #3d4637;
+    padding-left: 10px;
+    font-family: var(--main-font);
+    font-size: 12px;
+}
+
+.or{
+    font-family: var(--main-font);
+    font-weight: var(--medium);
+    font-size: 14px;
+    margin-top: 12px;
 }

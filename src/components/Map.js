@@ -5,12 +5,10 @@ import { useInRouterContext } from "react-router-dom";
 import { motion } from 'framer-motion'
 
 
+
 // const center = { lat: 40.74, lng: -73.90 }
 
-export default function Map() {
-
-
-  const [center, setCenter] = useState({ lat: 40.74, lng: -73.90 })
+export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeInfo, setTreeInfo}) {
 
 
 
@@ -20,7 +18,7 @@ export default function Map() {
 
   const [trees, setTrees] = useState([])
   const [userTrees, setUserTrees] = useState([])
-  const [showTreeInfo, setShowTreeInfo] = useState(false)
+  
 
   useEffect(() => {
     fetch('https://data.cityofnewyork.us/resource/5rq2-4hqu.json')
@@ -32,7 +30,7 @@ export default function Map() {
   }, [setTrees])
 
   useEffect(() => {
-    fetch('http://localhost:3000/trees')
+    fetch('https://trusted-swanky-whimsey.glitch.me/trees')
     .then((res) => res.json())
     .then(obj => {
       // console.log(obj.length)
@@ -41,12 +39,12 @@ export default function Map() {
   }, [setUserTrees])
 
 
-  const [treeInfo, setTreeInfo] = useState({spc_common: ''})
+  
   const [opens, setOpens] = useState(0)
   const [treeId, setTreeId] = useState(0)
 
   function handleClick(tree) {
-    console.log(treeId, tree['tree_id'], tree['tree_id'] === treeId, opens===0)
+    // console.log(treeId, tree['tree_id'], tree['tree_id'] === treeId, opens===0)
 
     if (treeId === tree['tree_id']) {
       setShowTreeInfo(!showTreeInfo)
@@ -61,7 +59,7 @@ export default function Map() {
     setTreeId(tree['tree_id'])
     
     
-    setTreeInfo({spc_common: tree['spc_common']})
+    setTreeInfo({spc_common: tree['spc_common'], health: tree.health, tree: tree})
   }
 
   function handleUserTreeClick(tree) {
@@ -74,7 +72,7 @@ export default function Map() {
       setShowTreeInfo(true)
     }
 
-    let newOpens = opens +1
+    let newOpens = opens+1
     setOpens(newOpens)
     setTreeId(tree['tree_id'])
     
@@ -92,11 +90,13 @@ export default function Map() {
         <h1>EXPLORE MAP</h1>
         <div className="feature">
           <div className={`map-container ${showTreeInfo ? '' : 'map-container-full'}`}>
-          <GoogleMap center={center} zoom={12} mapContainerStyle={{ width: '100%', height: '100%'}}>
+          <GoogleMap center={center} zoom={zoom} mapContainerStyle={{ width: '100%', height: '100%'}}>
               {trees.map(tree => {           
-                return (
-                  <Marker onClick={() => handleClick(tree)} key={tree["tree_id"]} position={{ lat:parseFloat(tree.latitude), lng:parseFloat(tree.longitude)}}/>
-                )
+                if (tree['spc_common']) {
+                  return (
+                    <Marker onClick={() => handleClick(tree)} key={tree["tree_id"]} position={{ lat:parseFloat(tree.latitude), lng:parseFloat(tree.longitude)}} icon={{url:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}}/>
+                  )
+                }
               })}
               {userTrees.map(tree => {
                 return (
@@ -105,9 +105,11 @@ export default function Map() {
               })}
             </GoogleMap>
           </div>
+          
           <div className={`card ${showTreeInfo ? '' : 'card-none'}`}>
             {showTreeInfo ? <TreeInfo info={treeInfo}/> : null} 
           </div>
+          
         </div>
         
         

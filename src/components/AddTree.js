@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
-import ManualForm from './ManualForm';
 import AddTreeForm from './AddTreeForm';
+import { motion } from 'framer-motion';
 
-function AddTree() {
-  const [isManual, setIsManual] = useState(false);
+
+export default function AddTree({handleSubmit, encodeImageFileAsURL, handleNameChange, useCustomLocation, setUseCustomLocation, handleLatChange, handleLngChange }) {
 
   return (
-    <div>
-      {isManual ? <ManualForm setIsManual={setIsManual}/> : <AddTreeForm setIsManual={setIsManual}/>}
-    </div>
+    
+      <>
+        <AddTreeForm handleSubmit={handleSubmit} encodeImageFileAsURL={encodeImageFileAsURL} handleNameChange={handleNameChange} useCustomLocation={useCustomLocation} setUseCustomLocation={setUseCustomLocation} handleLatChange={handleLatChange} handleLngChange={handleLngChange}/>
+      </>
+     
   )
 }
-
-export default AddTree;

@@ -1,18 +1,58 @@
 import React, {useState} from 'react'
 import { motion } from 'framer-motion'
 
-export default function ManualForm({setIsManual}) {
+export default function ManualForm({setIsManual, handleSubmit, pos}) {
+
+  const [name, setName] = useState('')
+  const [image, setImage] = useState('')
+  const [wikiImage, setWikiImage] = useState('')
+  const [wikiLink, setWikiLink] = useState('')
+  const [newTree, setNewTree] = useState({})
+
+
+
+  const wiki = require('wikipedia');
+
+  (async () => {
+    try {
+      const page = await wiki.page(name);
+      const summary = await page.summary();
+      console.log(summary)
+      setWikiLink(summary['content_urls'].desktop.page)
+
+      setWikiImage(summary.thumbnail.source)
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  })();
+
+
+
+  function handleChange(e) {
+    setName(e.target.value)
+    setImage()
+    setNewTree({
+      spc_common: name,
+      wiki: wikiLink,
+      image: wikiImage,
+      position: pos
+    })
+  }
+
+  
 
     return (
       <main className='add-tree'>
       <motion.div className='form-container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
         <div className='title'>MANUAL INPUT</div>
         <hr></hr>
-        <form>
+        <form handleSubmit={(e) => handleSubmit(e, newTree)}>
           <div className="details">
             <div className="input-box">
               <span className='sub-head'>Name</span>
-              <input type='text' placeholder='Enter Tree Name' />
+              <input type='text' placeholder='Enter Tree Name' onChange={handleChange}/>
             </div>
 
             <div className="input-box">
