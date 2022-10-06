@@ -22,6 +22,19 @@ function App() {
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
 
+  const [trees, setTrees] = useState([])
+
+  useEffect(() => {
+    fetch('https://data.cityofnewyork.us/resource/5rq2-4hqu.json')
+    .then((res) => res.json())
+    .then(obj => {
+      // console.log(obj.length)
+      setTrees(obj.filter(t => t['spc_common'] !== undefined))
+    })
+  }, [setTrees])
+
+  
+
   function handleLatChange(e) {
     setLatitude(e.target.value)
   }
@@ -45,8 +58,6 @@ function App() {
               lng: parseFloat(longitude)
             }
           }
-
-          console.log(pos)
         }
       )
     }
@@ -60,7 +71,6 @@ function App() {
   const [showTreeInfo, setShowTreeInfo] = useState(false)
   const [treeInfo, setTreeInfo] = useState({spc_common: '', userAdded: true})
   const [newTree, setNewTree] = useState({})
-  // const [newTreeByName, setNewTreeByName] = useState({})
 
 
   const [center, setCenter] = useState({ lat: 40.74, lng: -73.90 })
@@ -197,15 +207,18 @@ function App() {
     }
   }
 
+  const treeOptions = trees.filter((item, index) => index === trees.indexOf(trees.find(tree => tree['spc_common'] === item['spc_common'])))
+
+
 
   return (
     <div className="App">
       <Header/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="map" element={<Map center={center} zoom={zoom} showTreeInfo={showTreeInfo} setShowTreeInfo={setShowTreeInfo} treeInfo={treeInfo} setTreeInfo={setTreeInfo}/>} />
-        <Route path="addtree" element={<AddTree handleSubmit={handleSubmit} encodeImageFileAsURL={encodeImageFileAsURL} pos={pos} handleNameChange={handleNameChange} setUseCustomLocation={setUseCustomLocation} handleLatChange={handleLatChange} handleLngChange={handleLngChange}/>}/>
-        <Route path="progress" element={<Progress />}/>
+        <Route path="map" element={<Map center={center} zoom={zoom} showTreeInfo={showTreeInfo} setShowTreeInfo={setShowTreeInfo} treeInfo={treeInfo} setTreeInfo={setTreeInfo} treeOptions={treeOptions} trees={trees}/>} />
+        <Route path="addtree" element={<AddTree handleSubmit={handleSubmit} encodeImageFileAsURL={encodeImageFileAsURL} pos={pos} handleNameChange={handleNameChange} setUseCustomLocation={setUseCustomLocation} handleLatChange={handleLatChange} handleLngChange={handleLngChange} useCustomLocation={useCustomLocation}/>}/>
+        <Route path="progress" element={<Progress treeOptions={treeOptions} trees={trees}/>}/>
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />

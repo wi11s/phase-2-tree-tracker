@@ -5,7 +5,7 @@ import { useInRouterContext } from "react-router-dom";
 import { motion } from 'framer-motion'
 
 
-export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeInfo, setTreeInfo}) {
+export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeInfo, setTreeInfo, treeOptions, trees}) {
 
 
 
@@ -13,19 +13,8 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     googleMapsApiKey: process.env.REACT_APP_API_KEY
   })
 
-  const [trees, setTrees] = useState([])
   const [userTrees, setUserTrees] = useState([])
   
-
-  useEffect(() => {
-    fetch('https://data.cityofnewyork.us/resource/5rq2-4hqu.json')
-    .then((res) => res.json())
-    .then(obj => {
-      // console.log(obj.length)
-      setTrees(obj.filter(t => t['spc_common'] !== undefined))
-    })
-  }, [setTrees])
-
   useEffect(() => {
     fetch('https://trusted-swanky-whimsey.glitch.me/trees')
     .then((res) => res.json())
@@ -79,7 +68,6 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
 
   
 
-  const treeOptions = trees.filter((item, index) => index === trees.indexOf(trees.find(tree => tree['spc_common'] === item['spc_common'])))
   const userTreeOptions = userTrees.filter((item, index) => index === userTrees.indexOf(userTrees.find(tree => tree['spc_common'] === item['spc_common'])))
   // console.log(userTreeOptions)
 
@@ -141,22 +129,24 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     <main className="map">
       <motion.div className='container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
         <h1>EXPLORE MAP</h1>
-        <label>Original Trees</label>
-        <select onChange={handleOriginalSelectChange} type='select'>
-          <option value='all'>ALL</option>
-          <option value='none'>NONE</option>
-          {treeOptions.map(tree => {
-            return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
-          })}
-        </select>
-        <label>Your Trees</label>
-        <select onChange={handleUserSelectChange} type='select'>
-          <option value='all'>ALL</option>
-          <option value='none'>NONE</option>
-          {userTreeOptions.map(tree => {
-              return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
+        <div className="selectContainer">
+          <label>Filter Original Trees</label>
+          <select onChange={handleOriginalSelectChange} type='select'>
+            <option value='all'>ALL</option>
+            <option value='none'>NONE</option>
+            {treeOptions.map(tree => {
+              return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common'].toLowerCase()}</option>)
             })}
-        </select>
+          </select>
+          <label>Filter Your Trees</label>
+          <select onChange={handleUserSelectChange} type='select'>
+            <option value='all'>ALL</option>
+            <option value='none'>NONE</option>
+            {userTreeOptions.map(tree => {
+                return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common'].toLowerCase()}</option>)
+              })}
+          </select>
+        </div>
         <div className="feature">
           <div className={`map-container ${showTreeInfo ? '' : 'map-container-full'}`}>
           <GoogleMap center={center} zoom={zoom} mapContainerStyle={{ width: '100%', height: '100%'}}>

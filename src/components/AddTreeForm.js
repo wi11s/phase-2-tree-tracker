@@ -11,8 +11,8 @@ function AddTreeForm({ encodeImageFileAsURL, handleSubmit, handleNameChange, han
     }
 
 
-    return (
-        <main className='add-tree'>
+  return (
+    <main className='add-tree'>
       <motion.div className='form-container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
         <div className='title'>ADD TREE</div>
         <hr></hr>
@@ -26,8 +26,8 @@ function AddTreeForm({ encodeImageFileAsURL, handleSubmit, handleNameChange, han
               {useCustomLocation ? 
               null :
               <>
-              <input type='text' placeholder='Latitude' onChange={handleLatChange}/>
-              <input type='text' placeholder='Longitude' onChange={handleLngChange}/>
+              <input type='text' className='inputStyle' placeholder='Latitude' onChange={handleLatChange}/>
+              <input type='text' className='inputStyle' placeholder='Longitude' onChange={handleLngChange}/>
               </>}
             </div>
 
@@ -38,7 +38,7 @@ function AddTreeForm({ encodeImageFileAsURL, handleSubmit, handleNameChange, han
             <h4>or</h4>
             <div className="upload-img">
                 <span className="sub-head">Use Species of Tree</span>
-                <input type='text' placeholder='Enter Species' onChange={(e) => handleNameChange(e)}/>
+                <input className='inputStyle' type='text' placeholder='Enter Species' onChange={(e) => handleNameChange(e)}/>
             </div>
 
             <div className='submitBtn'>
@@ -49,7 +49,7 @@ function AddTreeForm({ encodeImageFileAsURL, handleSubmit, handleNameChange, han
         </form>
       </motion.div>
     </main>
-    )
+  )
 }
 
 export default AddTreeForm;
