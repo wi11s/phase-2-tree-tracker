@@ -2,13 +2,14 @@ import { IDLE_NAVIGATION } from '@remix-run/router'
 import React, {useState} from 'react'
 import { motion } from 'framer-motion';
 
-export default function TreeInfo({info, handleChange}) {
+export default function TreeInfo({info, handleClick}) {
   // console.log(info, info.image)
   const imageExists = info.image !== undefined
   const [description, setDescription] = useState('');
   const [wikiLink, setWikiLink] = useState('')
   const [wikiImage, setWikiImage] = useState('')
-  
+  const [idToDelete, setIdToDelete] = useState(-1)
+
 
   const wiki = require('wikipedia');
 
@@ -27,12 +28,13 @@ export default function TreeInfo({info, handleChange}) {
       
     } catch (error) {
       console.log(error);
-
     }
   })();
 
+
+
   return (
-    <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
+    <motion.div initial={{ scale: .98, opacity: 0 }} animate={{ scale: 1, opacity: 1, transition:{duration: .8}}}>
         <div className='details'>{info['spc_common']}</div>
         <hr></hr>
         <div className="details">
@@ -40,6 +42,7 @@ export default function TreeInfo({info, handleChange}) {
           <p>{description}</p>
           <div className='moreInfo'>
           <a href={imageExists? info.wiki : wikiLink} target="_blank" rel="noopener noreferrer">More Info</a>
+          {info.userAdded ? <button onClick={() => handleClick(info.id)}>Remove</button> : null}
           </div>
         </div>
 

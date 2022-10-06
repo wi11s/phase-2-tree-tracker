@@ -5,9 +5,6 @@ import { useInRouterContext } from "react-router-dom";
 import { motion } from 'framer-motion'
 
 
-
-// const center = { lat: 40.74, lng: -73.90 }
-
 export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeInfo, setTreeInfo}) {
 
 
@@ -25,7 +22,7 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     .then((res) => res.json())
     .then(obj => {
       // console.log(obj.length)
-      setTrees(obj)
+      setTrees(obj.filter(t => t['spc_common'] !== undefined))
     })
   }, [setTrees])
 
@@ -59,27 +56,83 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     setTreeId(tree['tree_id'])
     
     
-    setTreeInfo({spc_common: tree['spc_common'], health: tree.health, tree: tree})
+    setTreeInfo({spc_common: tree['spc_common'], health: tree.health, tree: tree, userAdded: false})
   }
 
   function handleUserTreeClick(tree) {
 
-    if (opens===0) {
+    if (treeId === tree['id']) {
+      console.log(tree)
+      setShowTreeInfo(!showTreeInfo)
+    } else if (opens===0) {
       setShowTreeInfo(true)
-    } else if (treeId === tree['tree_id']) {
-      setShowTreeInfo(false)
     } else if (treeId !== tree['tree_id']) {
       setShowTreeInfo(true)
     }
 
-    let newOpens = opens+1
-    setOpens(newOpens)
-    setTreeId(tree['tree_id'])
+    setOpens(1)
+    setTreeId(tree['id'])
     
     
-    setTreeInfo({spc_common: tree['spc_common'], wiki: tree.wiki, image: tree.image})
+    setTreeInfo({spc_common: tree['spc_common'], wiki: tree.wiki, image: tree.image, userAdded: true, id: tree.id})
   }
 
+  
+
+  const treeOptions = trees.filter((item, index) => index === trees.indexOf(trees.find(tree => tree['spc_common'] === item['spc_common'])))
+  const userTreeOptions = userTrees.filter((item, index) => index === userTrees.indexOf(userTrees.find(tree => tree['spc_common'] === item['spc_common'])))
+  // console.log(userTreeOptions)
+
+
+  const [filterBy, setFilterBy] = useState('')
+
+  let displayTrees = trees.filter((tree) => {
+    // console.log(tree['spc_common'].toLowerCase().includes('honeylocust'))
+    return (tree['spc_common'].toLowerCase().includes(filterBy.toLowerCase()))
+  })
+  console.log(displayTrees)
+  // console.log(trees.filter(tree => tree['spc_common'].toLowerCase().includes('g')))
+
+  function handleOriginalSelectChange(e) {
+    console.log(e.target.value)
+
+    if (e.target.value === 'all') {
+      setFilterBy('')
+    } else {
+      setFilterBy(e.target.value)
+    }
+
+  }
+
+
+
+  const [userFilterBy, setUserFilterBy] = useState('')
+
+  let userDisplayTrees = userTrees.filter((tree) => {
+    console.log(tree['spc_common'].toLowerCase().includes('honeylocust'))
+    return (tree['spc_common'].toLowerCase().includes(userFilterBy.toLowerCase()))
+  })
+  
+  function handleUserSelectChange(e) {
+    console.log(e.target.value)
+    if (e.target.value === 'all') {
+      setUserFilterBy('')
+    } else {
+      setUserFilterBy(e.target.value)
+    }
+  }
+
+
+  function handleDelete(id) {
+    fetch(`https://trusted-swanky-whimsey.glitch.me/trees/${id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(() => {
+      setShowTreeInfo(false)
+      setUserTrees(userTrees.filter(t => t.id !== id))
+    }) 
+  }
 
   if (!isLoaded) {
     return <p>loading</p>
@@ -88,28 +141,44 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     <main className="map">
       <motion.div className='container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
         <h1>EXPLORE MAP</h1>
+        <div className="select-container">
+        <label>Original Trees</label>
+        <select onChange={handleOriginalSelectChange} type='select'>
+          <option value='all'>ALL</option>
+          <option value='none'>NONE</option>
+          {treeOptions.map(tree => {
+            return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
+          })}
+        </select>
+        <label>Your Trees</label>
+        <select onChange={handleUserSelectChange} type='select'>
+          <option value='all'>ALL</option>
+          <option value='none'>NONE</option>
+          {userTreeOptions.map(tree => {
+              return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
+            })}
+        </select>
+        </div>
         <div className="feature">
           <div className={`map-container ${showTreeInfo ? '' : 'map-container-full'}`}>
           <GoogleMap center={center} zoom={zoom} mapContainerStyle={{ width: '100%', height: '100%'}}>
-              {trees.map(tree => {           
+              {displayTrees.map(tree => {           
                 if (tree['spc_common']) {
                   return (
-                    <Marker onClick={() => handleClick(tree)} key={tree["tree_id"]} position={{ lat:parseFloat(tree.latitude), lng:parseFloat(tree.longitude)}} icon={{url:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}}/>
+                    <Marker onClick={() => handleClick(tree)} key={tree["tree_id"]} position={{ lat:parseFloat(tree.latitude), lng:parseFloat(tree.longitude)}} icon={{url:'https://cdn.glitch.global/9f685967-c8a4-42aa-8c04-dcb09837b5fd/tree-icon%20(1).png?v=1665071872635'}}/>
                   )
                 }
               })}
-              {userTrees.map(tree => {
+              {userDisplayTrees.map(tree => {
                 return (
-                  <Marker onClick={() => handleUserTreeClick(tree)} key={tree.id} position={{ lat:parseFloat(tree.position.lat), lng:parseFloat(tree.position.lng)}}/>
+                  <Marker onClick={() => handleUserTreeClick(tree)} key={tree.id} position={{ lat:parseFloat(tree.position.lat), lng:parseFloat(tree.position.lng)}} icon={{url:'https://cdn.glitch.global/9f685967-c8a4-42aa-8c04-dcb09837b5fd/tree-icon-user%20(1).png?v=1665073757677'}}/>
                 )
               })}
             </GoogleMap>
           </div>
-          
           <div className={`card ${showTreeInfo ? '' : 'card-none'}`}>
-            {showTreeInfo ? <TreeInfo info={treeInfo}/> : null} 
+            {showTreeInfo ? <TreeInfo info={treeInfo} handleClick={handleDelete}/> : null} 
           </div>
-          
         </div>
         
         

@@ -171,7 +171,7 @@ img{
     color: var(--main-color);
     font-size: 30px;
     letter-spacing: 2px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .form h1{
@@ -191,7 +191,7 @@ img{
 .map-container{
     position: relative;
     width: 75vw;
-    height: 60vh;
+    height: 55vh;
     border-radius: 15px;
     background-color: var(--main-color);
 }
@@ -202,7 +202,7 @@ img{
 
 .card{
     width: 25vw;
-    min-height: 60vh;
+    min-height: 55vh;
     border-radius: 15px;
     padding: 20px 25px;
     border: 1px solid #3d4637;
@@ -230,13 +230,44 @@ h4{
     margin-bottom: 5px;
 }
 
+.moreInfo button{
+    border: none;
+    background-color: #fff;
+    font-family: var(--main-font);
+    font-weight: var(--medium);
+    color: var(--main-color);
+    font-size: 13px;
+    margin-bottom: 5px;
+    border: 1px solid #3d4637;
+    border-radius: 3px;
+    padding: 3px 8px;
+    transition: .5s;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.moreInfo button:hover{
+    background-color: var(--main-color);
+    color: #fff;
+    border: 1px solid #fff;
+}
+
 .moreInfo a{
     font-family: var(--main-font);
     font-weight: var(--medium);
     color: var(--main-color);
     font-size: 13px;
     margin-bottom: 5px;
-    border-bottom: 1px solid #3d4637;
+    border: 1px solid #3d4637;
+    border-radius: 3px;
+    padding: 3px 8px;
+    transition: .5s;
+}
+
+.moreInfo a:hover{
+    background-color: var(--main-color);
+    color: #fff;
+    border: 1px solid #fff;
 }
 
 .card p{
@@ -262,6 +293,18 @@ h4{
 
 .image-container:hover img{
     transform: scale(1.025);
+}
+
+.select-container{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.select-container label{
+    font-family: var(--main-font);
+    color: var(--main-color);
+    font-weight: var(--regular);
 }
 
 /* ================= Add Tree ================= */
