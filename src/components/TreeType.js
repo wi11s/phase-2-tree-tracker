@@ -32,6 +32,9 @@ export default function TreeType({tree, trees, userTreesArray}) {
         <h3>
             {tree['spc_common'].toLowerCase()}
         </h3>
+        <h4>
+            {collected ? 'successfully identified' : 'not yet identified'}
+        </h4>
         <p>{howRare}</p>
         
     </div>
