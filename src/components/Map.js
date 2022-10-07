@@ -7,8 +7,6 @@ import { motion } from 'framer-motion'
 
 export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeInfo, setTreeInfo, treeOptions, trees}) {
 
-
-
   const {isLoaded} = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_API_KEY
   })
@@ -23,8 +21,6 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
       setUserTrees(obj)
     })
   }, [setUserTrees])
-
-
   
   const [opens, setOpens] = useState(0)
   const [treeId, setTreeId] = useState(0)
@@ -66,11 +62,8 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     setTreeInfo({spc_common: tree['spc_common'], wiki: tree.wiki, image: tree.image, userAdded: true, id: tree.id})
   }
 
-  
-
   const userTreeOptions = userTrees.filter((item, index) => index === userTrees.indexOf(userTrees.find(tree => tree['spc_common'] === item['spc_common'])))
   // console.log(userTreeOptions)
-
 
   const [filterBy, setFilterBy] = useState('')
 
@@ -78,7 +71,7 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     // console.log(tree['spc_common'].toLowerCase().includes('honeylocust'))
     return (tree['spc_common'].toLowerCase().includes(filterBy.toLowerCase()))
   })
-  console.log(displayTrees)
+  // console.log(displayTrees)
   // console.log(trees.filter(tree => tree['spc_common'].toLowerCase().includes('g')))
 
   function handleOriginalSelectChange(e) {
@@ -92,12 +85,10 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
 
   }
 
-
-
   const [userFilterBy, setUserFilterBy] = useState('')
 
   let userDisplayTrees = userTrees.filter((tree) => {
-    console.log(tree['spc_common'].toLowerCase().includes('honeylocust'))
+    // console.log(tree['spc_common'].toLowerCase().includes('honeylocust'))
     return (tree['spc_common'].toLowerCase().includes(userFilterBy.toLowerCase()))
   })
   
@@ -109,7 +100,6 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
       setUserFilterBy(e.target.value)
     }
   }
-
 
   function handleDelete(id) {
     fetch(`https://trusted-swanky-whimsey.glitch.me/trees/${id}`, {
@@ -129,7 +119,7 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
     <main className="map">
       <motion.div className='container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
         <h1>EXPLORE MAP</h1>
-        <div className="selectContainer">
+        <div className="select-container">
           <label>Filter Original Trees</label>
           <select onChange={handleOriginalSelectChange} type='select'>
             <option value='all'>ALL</option>
@@ -159,7 +149,7 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
               })}
               {userDisplayTrees.map(tree => {
                 return (
-                  <Marker onClick={() => handleUserTreeClick(tree)} key={tree.id} position={{ lat:parseFloat(tree.position.lat), lng:parseFloat(tree.position.lng)}} icon={{url:'https://cdn.glitch.global/9f685967-c8a4-42aa-8c04-dcb09837b5fd/tree-icon-user%20(3).png?v=1665088498694'}}/>
+                  <Marker onClick={() => handleUserTreeClick(tree)} key={tree.id} position={{ lat:parseFloat(tree.position.lat), lng:parseFloat(tree.position.lng)}} icon={{url:'https://i.imgur.com/6WzuSjd.png'}}/>
                 )
               })}
             </GoogleMap>

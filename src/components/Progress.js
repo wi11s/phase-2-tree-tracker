@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TreeType from './TreeType'
+import { motion } from 'framer-motion'
 
 export default function ({ treeOptions, trees}) {
     const [points, setPoints] = useState(0)
@@ -23,16 +24,22 @@ export default function ({ treeOptions, trees}) {
         setPoints(pts)
     }, [pts])
 
-
-
-  return (
-    <div>
-        <h1>You've identifies {points}/{total} species of trees</h1>
-        {treeOptions.map(tree => {
-            return (
-                <TreeType key={tree['spc_common']} tree={tree} trees={trees} userTreesArray={userTreesArray}/>
-            )
-        })}
-    </div>
-  )
+    return (
+        <main className='progress'>
+        <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}} className='progress-container'>
+          <div className='progress-title'>
+            <h1>PROGRESS </h1>
+            <span>{points} / {total}</span>
+            </div>
+            <hr></hr>
+            <div className='progree-card-container'>
+              {treeOptions.map(tree => {
+                  return (
+                      <TreeType key={tree['spc_common']} tree={tree} trees={trees} userTreesArray={userTreesArray}/>
+                  )
+              })}
+            </div>
+        </motion.div>
+        </main>
+      )
 }

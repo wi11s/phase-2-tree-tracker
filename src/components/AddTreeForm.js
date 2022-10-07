@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { UNSAFE_DataRouterStateContext } from "react-router-dom";
 
 function AddTreeForm({ encodeImageFileAsURL, handleSubmit, handleNameChange, handleLatChange, handleLngChange, useCustomLocation, setUseCustomLocation}) {
     
-    
-
     function handleCheckBox() {
-        setUseCustomLocation(useCustomLocation => !useCustomLocation)
+        setUseCustomLocation(!useCustomLocation)
     }
-
 
   return (
     <main className='add-tree'>
@@ -35,7 +32,7 @@ function AddTreeForm({ encodeImageFileAsURL, handleSubmit, handleNameChange, han
               <span className='sub-head'>Upload Image</span>
               <input type='file' onChange={(e) => encodeImageFileAsURL(e)}/>
             </div>
-            <h4>or</h4>
+            <div className="or">or</div>
             <div className="upload-img">
                 <span className="sub-head">Use Species Name</span>
                 <input className='inputStyle' type='text' placeholder='Enter Species' onChange={(e) => handleNameChange(e)}/>

@@ -2,7 +2,7 @@
 import './App.css';
 import React, {useState, useEffect} from'react';
 
-import {Routes, Route, Link } from "react-router-dom"
+import {Routes, Route } from "react-router-dom"
 // import { BrowserRouter as Router } from 'react-router-dom';
 import Home from './Home';
 import Header from './Header';
@@ -15,8 +15,6 @@ import { useNavigate } from 'react-router-dom'
 
 
 function App() {
-
-
 
   const [useCustomLocation, setUseCustomLocation] = useState(true)
   const [latitude, setLatitude] = useState(null)
@@ -33,7 +31,16 @@ function App() {
     })
   }, [setTrees])
 
+  const [userTrees, setUserTrees] = useState([])
   
+  useEffect(() => {
+    fetch('https://trusted-swanky-whimsey.glitch.me/trees')
+    .then((res) => res.json())
+    .then(obj => {
+      // console.log(obj.length)
+      setUserTrees(obj)
+    })
+  }, [setUserTrees])
 
   function handleLatChange(e) {
     setLatitude(e.target.value)
@@ -64,7 +71,6 @@ function App() {
   }
   getLocation()
 
-
   const navigate = useNavigate()
   const apiKey = process.env.REACT_APP_PLANT_KEY
 
@@ -72,10 +78,8 @@ function App() {
   const [treeInfo, setTreeInfo] = useState({spc_common: '', userAdded: true})
   const [newTree, setNewTree] = useState({})
 
-
   const [center, setCenter] = useState({ lat: 40.74, lng: -73.90 })
   const [zoom, setZoom] = useState(12)
-
 
   const wiki = require('wikipedia');
 
@@ -108,6 +112,16 @@ function App() {
   })();
 
   
+  const [allTrees, setAllTrees] = useState([])
+  useEffect(() => {
+    setAllTrees([...trees, ...userTrees])
+  }, [trees, userTrees])
+
+  console.log(allTrees)
+  const treeOptions = allTrees.filter((item, index) => index === allTrees.indexOf(allTrees.find(tree => tree['spc_common'] === item['spc_common'])))
+  // const [treeOptions, setTreeOptions] = useState(tOps)
+  // console.log(treeOptions)
+  
   function idPost(base64files) {
     fetch('https://api.plant.id/v2/identify', {
       method: 'POST',
@@ -137,7 +151,6 @@ function App() {
     });
   }
 
-
   function encodeImageFileAsURL(e) {
     let file = e.target.files[0];
     let reader = new FileReader();
@@ -146,7 +159,6 @@ function App() {
     }
     reader.readAsDataURL(file);
   }
-
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -169,11 +181,13 @@ function App() {
         setCenter(pos)
         setZoom(16)
         setTreeInfo({spc_common: obj['spc_common'], wiki: obj.wiki, image: obj.image, userAdded: true})
+
+        setAllTrees(allTrees => [...allTrees, obj])
   
         setShowTreeInfo(true)
       })
     } else if (!description.toLowerCase().includes('tree') && !description.toLowerCase().includes('plant')) {
-      // console.log(description.includes('plant'))
+      
       alert('Please enter a valid tree name')
     } else {
 
@@ -201,15 +215,15 @@ function App() {
         setCenter(pos)
         setZoom(16)
         setTreeInfo({spc_common: obj['spc_common'], wiki: obj.wiki, image: obj.image})
+
+        setAllTrees(allTrees => [...allTrees, obj])
   
         setShowTreeInfo(true)
       })
     }
   }
 
-  const treeOptions = trees.filter((item, index) => index === trees.indexOf(trees.find(tree => tree['spc_common'] === item['spc_common'])))
-
-
+  
 
   return (
     <div className="App">
@@ -217,9 +231,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="map" element={<Map center={center} zoom={zoom} showTreeInfo={showTreeInfo} setShowTreeInfo={setShowTreeInfo} treeInfo={treeInfo} setTreeInfo={setTreeInfo} treeOptions={treeOptions} trees={trees}/>} />
-        <Route path="addtree" element={<AddTree handleSubmit={handleSubmit} encodeImageFileAsURL={encodeImageFileAsURL} pos={pos} handleNameChange={handleNameChange} setUseCustomLocation={setUseCustomLocation} handleLatChange={handleLatChange} handleLngChange={handleLngChange} useCustomLocation={useCustomLocation}/>}/>
-        <Route path="progress" element={<Progress treeOptions={treeOptions} trees={trees}/>}/>
-        <Route path="*" element={<Error />} />
+        <Route path="addtree" element={<AddTree handleSubmit={handleSubmit} encodeImageFileAsURL={encodeImageFileAsURL} pos={pos} handleNameChange={handleNameChange} setUseCustomLocation={setUseCustomLocation} handleLatChange={handleLatChange} handleLngChange={handleLngChange} useCustomLocation={useCustomLocation}/>} />
+        <Route path="progress" element={<Progress treeOptions={treeOptions} trees={trees}/>} />
+        <Route path="*" element={<Error />} /> 
       </Routes>
       <Footer />
     </div>

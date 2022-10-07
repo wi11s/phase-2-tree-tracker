@@ -30,6 +30,13 @@ img{
     height: auto;
 }
 
+body{
+    background-image: url('../images/background3.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 /* ================= Header ================= */
 
 .header{
@@ -119,8 +126,8 @@ img{
 
 .button{
     display: inline-block;
-    background-color: #fff;
-    border: 1px solid var(--main-color);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: .5px solid var(--main-color);
     font-family: var(--main-font);
     font-size: 16px;
     font-weight: var(--medium);
@@ -205,7 +212,7 @@ img{
     min-height: 55vh;
     border-radius: 15px;
     padding: 20px 25px;
-    border: 1px solid #3d4637;
+    border: .5px solid #3d4637;
     overflow: hidden;
     display: block;
 }
@@ -218,7 +225,8 @@ img{
     font-family: var(--main-font);
     font-weight: var(--bold);
     color: var(--main-color);
-    font-size: 35px;
+    font-size: 28px;
+    text-transform: capitalize;
     margin-bottom: 20px;
 }
 
@@ -238,7 +246,7 @@ h4{
     color: var(--main-color);
     font-size: 13px;
     margin-bottom: 5px;
-    border: 1px solid #3d4637;
+    border: .5px solid #3d4637;
     border-radius: 3px;
     padding: 3px 8px;
     transition: .5s;
@@ -249,7 +257,7 @@ h4{
 .moreInfo button:hover{
     background-color: var(--main-color);
     color: #fff;
-    border: 1px solid #fff;
+    border: .5px solid #fff;
 }
 
 .moreInfo a{
@@ -258,7 +266,7 @@ h4{
     color: var(--main-color);
     font-size: 13px;
     margin-bottom: 5px;
-    border: 1px solid #3d4637;
+    border: .5px solid #3d4637;
     border-radius: 3px;
     padding: 3px 8px;
     transition: .5s;
@@ -320,8 +328,10 @@ h4{
     max-width: 290px;
     width: 100%;
     padding: 25px 30px 16px;
-    border: 1px solid #3d4637;
+    border: .5px solid #3d4637;
     border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    
 }
 
 .add-tree .title{
@@ -337,7 +347,7 @@ h4{
 }
 
 hr{
-    height: 1px;
+    height: .5px;
     margin-top: 15px;
     margin-bottom: 18px;
     border: none;
@@ -415,7 +425,7 @@ form .submitBtn input:hover{
     width: 227px;
     outline: none;
     border-radius: 5px;
-    border: 1px solid #3d4637;
+    border: .5px solid #3d4637;
     padding-left: 10px;
     font-family: var(--main-font);
     font-size: 12px;
@@ -428,13 +438,120 @@ form .submitBtn input:hover{
     margin-top: 12px;
 }
 
-.collected {
-    color: green;
-    border-style: solid;
-    border-width: 2px;
+/* ================= Progress ================= */
+
+.progress{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
 }
-.uncollected {
-    color: black;
-    border-style: solid;
-    border-width: 2px;
+
+.progress-container{
+    background-color: rgba(255, 255, 255, 0.5);
+    border: .5px solid #3d4637;
+    max-height: 80vh;
+    min-width: 75vw;
+    border-radius: 13px;
+    padding: 30px;
+}
+
+.progress-container h1{
+    font-family: var(--main-font);
+    font-weight: var(--bold);
+    color: var(--main-color);
+    font-size: 30px;;
+}
+
+.progree-card-container{
+    display: grid;
+    grid-template-columns: 198px 198px 198px 198px 198px; 
+    gap: 15px;
+    max-height: 400px;
+    overflow: scroll;
+    padding: 5px;
+}
+
+.progress-card{
+    border: .5px solid #3d4637;
+    border-radius: 10px;
+    padding: 15px;
+    transition: .5s;
+}
+
+.progress-card:hover{
+    transform: scale(1.02);
+}
+
+.progress-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-title span{
+    background-color: var(--main-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: var(--bold);
+}
+
+.card-image-container{
+    overflow: hidden;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.card-image-container img{
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;   
+    transition: 200ms transform ease-in-out;
+}
+
+.progress-card h3{
+    font-size: 17px;
+    text-transform: capitalize;
+    margin-bottom: -5px;
+    margin-top: 10px;
+}
+
+.progress-card h4{
+    font-weight: var(--medium);
+    font-size: 12px;
+    color: var(--main-color);
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.progress-card span{
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottom i{
+    font-size: 22px;
+    color: #3d4637;
+}
+
+.bottom .circle{
+    height: 16px;
+    max-width: 12px;
+    border-radius: 50%;
+    border: .5px solid #3d4637;
+    background-color: #fff;
 }
