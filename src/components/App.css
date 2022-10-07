@@ -31,7 +31,7 @@ img{
 }
 
 body{
-    background-image: url('../images/background3.png');
+    background-image: url('../images/background2.png');
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -126,7 +126,7 @@ body{
 
 .button{
     display: inline-block;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
     border: .5px solid var(--main-color);
     font-family: var(--main-font);
     font-size: 16px;
@@ -225,7 +225,8 @@ body{
     font-family: var(--main-font);
     font-weight: var(--bold);
     color: var(--main-color);
-    font-size: 35px;
+    font-size: 28px;
+    text-transform: capitalize;
     margin-bottom: 20px;
 }
 
@@ -329,7 +330,8 @@ h4{
     padding: 25px 30px 16px;
     border: .5px solid #3d4637;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    
 }
 
 .add-tree .title{
@@ -446,7 +448,7 @@ form .submitBtn input:hover{
 }
 
 .progress-container{
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
     border: .5px solid #3d4637;
     max-height: 80vh;
     min-width: 75vw;
@@ -514,13 +516,16 @@ form .submitBtn input:hover{
 
 .progress-card h3{
     font-size: 17px;
+    text-transform: capitalize;
+    margin-bottom: -5px;
+    margin-top: 10px;
 }
 
 .progress-card h4{
     font-weight: var(--medium);
     font-size: 12px;
     color: var(--main-color);
-    margin-top: 5px;
+    margin-top: -5px;
     margin-bottom: 10px;
 }
 
@@ -550,3 +555,4 @@ form .submitBtn input:hover{
     border: .5px solid #3d4637;
     background-color: #fff;
 }
+

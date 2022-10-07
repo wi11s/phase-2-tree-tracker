@@ -142,22 +142,22 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
       <motion.div className='container' initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}}>
         <h1>EXPLORE MAP</h1>
         <div className="select-container">
-        <label>Original Trees</label>
-        <select onChange={handleOriginalSelectChange} type='select'>
-          <option value='all'>ALL</option>
-          <option value='none'>NONE</option>
-          {treeOptions.map(tree => {
-            return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
-          })}
-        </select>
-        <label>Your Trees</label>
-        <select onChange={handleUserSelectChange} type='select'>
-          <option value='all'>ALL</option>
-          <option value='none'>NONE</option>
-          {userTreeOptions.map(tree => {
+          <label>Original Trees</label>
+          <select onChange={handleOriginalSelectChange} type='select'>
+            <option value='all'>ALL</option>
+            <option value='none'>NONE</option>
+            {treeOptions.map(tree => {
               return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
             })}
-        </select>
+          </select>
+          <label>Your Trees</label>
+          <select onChange={handleUserSelectChange} type='select'>
+            <option value='all'>ALL</option>
+            <option value='none'>NONE</option>
+            {userTreeOptions.map(tree => {
+                return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common']}</option>)
+              })}
+          </select>
         </div>
         <div className="feature">
           <div className={`map-container ${showTreeInfo ? '' : 'map-container-full'}`}>
