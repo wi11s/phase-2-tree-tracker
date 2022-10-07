@@ -171,7 +171,7 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
               })}
               {userDisplayTrees.map(tree => {
                 return (
-                  <Marker onClick={() => handleUserTreeClick(tree)} key={tree.id} position={{ lat:parseFloat(tree.position.lat), lng:parseFloat(tree.position.lng)}} icon={{url:'https://cdn.glitch.global/9f685967-c8a4-42aa-8c04-dcb09837b5fd/tree-icon-user%20(1).png?v=1665073757677'}}/>
+                  <Marker onClick={() => handleUserTreeClick(tree)} key={tree.id} position={{ lat:parseFloat(tree.position.lat), lng:parseFloat(tree.position.lng)}} icon={{url:'https://i.imgur.com/6WzuSjd.png'}}/>
                 )
               })}
             </GoogleMap>

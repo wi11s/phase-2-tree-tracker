@@ -38,7 +38,7 @@ function AddTreeForm({ encodeImageFileAsURL, handleSubmit, handleNameChange, han
           <div className="or">or</div>
           
           <div className="upload-img">
-              <span className="sub-head">Use Species of Tree</span>
+              <span className="sub-head">Use Species Name</span>
               <input className='inputStyle' type='text' placeholder='Enter latin name' onChange={(e) => handleNameChange(e)}/>
           </div>
 

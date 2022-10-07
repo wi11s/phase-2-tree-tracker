@@ -17,8 +17,7 @@ function Home() {
                 <h1>ALL ABOUT TREE</h1>
                 <img src={banner} alt='banner' />
                 <p>
-                A new way to explore your city and appretiate it's not-so-hidden gems. Easily identify trees, and keep track of your progress.<br/>
-                We've got you started with one thousand trees. You've got it from here.
+                We've got you started with one thousand trees (39 species). Identify these species yourself, and discover new ones; you've got it from here.
                 </p>
                 <NavLink to='/map' exact className='button'>Explore Map</NavLink>
             </motion.div>           
