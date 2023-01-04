@@ -11,7 +11,12 @@ export default function ({ treeOptions, trees}) {
       fetch('https://trusted-swanky-whimsey.glitch.me/trees')
       .then((res) => res.json())
       .then(obj => {
-        obj.map(o => arr.push(o['spc_common'].toLowerCase()))
+        console.log(obj)
+        obj.map(o => {
+          if (o['spc_common']) {
+            arr.push(o['spc_common'].toLowerCase())
+          }
+        })
         setUserTreesArray(arr)
         // console.log(arr)
       })
@@ -24,6 +29,8 @@ export default function ({ treeOptions, trees}) {
         setPoints(pts)
     }, [pts])
 
+    console.log(treeOptions[0])
+
     return (
         <main className='progress'>
         <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition:{duration: .8}}} className='progress-container'>
@@ -34,9 +41,11 @@ export default function ({ treeOptions, trees}) {
             <hr></hr>
             <div className='progree-card-container'>
               {treeOptions.map(tree => {
+                if (tree['spc_common']) {
                   return (
-                      <TreeType key={tree['spc_common']} tree={tree} trees={trees} userTreesArray={userTreesArray}/>
+                    <TreeType key={tree['spc_common']} tree={tree} trees={trees} userTreesArray={userTreesArray}/>
                   )
+                }  
               })}
             </div>
         </motion.div>

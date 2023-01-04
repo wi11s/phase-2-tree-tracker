@@ -88,8 +88,10 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
   const [userFilterBy, setUserFilterBy] = useState('')
 
   let userDisplayTrees = userTrees.filter((tree) => {
-    // console.log(tree['spc_common'].toLowerCase().includes('honeylocust'))
-    return (tree['spc_common'].toLowerCase().includes(userFilterBy.toLowerCase()))
+    console.log(tree['spc_common'])
+    if (tree['spc_common']) {
+      return (tree['spc_common'].toLowerCase().includes(userFilterBy.toLowerCase()))
+    }
   })
   
   function handleUserSelectChange(e) {
@@ -125,7 +127,9 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
             <option value='all'>ALL</option>
             <option value='none'>NONE</option>
             {treeOptions.map(tree => {
+              if (tree['spc_common']) {
               return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common'].toLowerCase()}</option>)
+              }
             })}
           </select>
           <label>Filter Your Trees</label>
@@ -133,8 +137,10 @@ export default function Map({center, zoom, showTreeInfo, setShowTreeInfo, treeIn
             <option value='all'>ALL</option>
             <option value='none'>NONE</option>
             {userTreeOptions.map(tree => {
+              if (tree['spc_common']) {
                 return (<option value={tree['spc_common']} key={tree['spc_common']}>{tree['spc_common'].toLowerCase()}</option>)
-              })}
+              }
+            })}
           </select>
         </div>
         <div className="feature">

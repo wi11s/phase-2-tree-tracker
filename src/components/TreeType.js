@@ -31,7 +31,10 @@ export default function TreeType({tree, trees, userTreesArray}) {
         } else if (treeToUse['spc_common']==="tulip-poplar") {
             setWikiImage('../images/tulip.jpg')
         } else {
-          setWikiImage(summary.thumbnail.source)
+            console.log(!!summary.thumbnail.source)
+            if (!!summary.thumbnail.source) {
+                setWikiImage(summary.thumbnail.source)
+            }
         }
         
       } catch (error) {
@@ -56,7 +59,7 @@ export default function TreeType({tree, trees, userTreesArray}) {
     }
     
     // console.log(userTreesArray.indexOf(tree['spc_common']))
-    if (userTreesArray.indexOf(treeToUse['spc_common'].toLowerCase()) > -1) {
+    if (treeToUse['spc_common'] && userTreesArray.indexOf(treeToUse['spc_common'].toLowerCase()) > -1) {
         collected = true
     }
 

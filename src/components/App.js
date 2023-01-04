@@ -26,7 +26,7 @@ function App() {
     fetch('https://data.cityofnewyork.us/resource/5rq2-4hqu.json')
     .then((res) => res.json())
     .then(obj => {
-      // console.log(obj.length)
+      console.log(obj[0])
       setTrees(obj.filter(t => t['spc_common'] !== undefined))
     })
   }, [setTrees])
@@ -59,11 +59,13 @@ function App() {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
+            // console.log(pos)
           } else {
             pos = {
               lat: parseFloat(latitude),
               lng: parseFloat(longitude)
             }
+            
           }
         }
       )
@@ -97,7 +99,7 @@ function App() {
       const page = await wiki.page(name);
       const summary = await page.summary();
 
-      console.log(summary)
+      // console.log(summary)
 
       setWikiLink(summary['content_urls'].desktop.page)
 
@@ -117,7 +119,7 @@ function App() {
     setAllTrees([...trees, ...userTrees])
   }, [trees, userTrees])
 
-  console.log(allTrees)
+  // console.log(allTrees)
   const treeOptions = allTrees.filter((item, index) => index === allTrees.indexOf(allTrees.find(tree => tree['spc_common'] === item['spc_common'])))
   // const [treeOptions, setTreeOptions] = useState(tOps)
   // console.log(treeOptions)
@@ -156,16 +158,18 @@ function App() {
     let reader = new FileReader();
     reader.onloadend = function() {
         idPost(reader.result.slice(23), pos)
+        console.log(reader.result.slice(23), pos)
     }
     reader.readAsDataURL(file);
   }
+  
 
   function handleSubmit(e) {
     e.preventDefault()
     if (pos===undefined) {
       alert('please wait for your current location to load')
     } else if (name==='') {
-      console.log(newTree, name)
+      // console.log(newTree, name)
     
       fetch('https://trusted-swanky-whimsey.glitch.me/trees', {
         method: 'POST',
@@ -176,15 +180,19 @@ function App() {
       })
       .then(response => response.json())
       .then((obj) => {
-
-        navigate('/map')
-        setCenter(pos)
-        setZoom(16)
-        setTreeInfo({spc_common: obj['spc_common'], wiki: obj.wiki, image: obj.image, userAdded: true})
-
-        setAllTrees(allTrees => [...allTrees, obj])
+        console.log(obj)
+        if (obj.error) {
+          alert(obj.error)
+        } else {
+          navigate('/map')
+          setCenter(pos)
+          setZoom(16)
+          setTreeInfo({spc_common: obj['spc_common'], wiki: obj.wiki, image: obj.image, userAdded: true})
   
-        setShowTreeInfo(true)
+          setAllTrees(allTrees => [...allTrees, obj])
+    
+          setShowTreeInfo(true)
+        }
       })
     } else if (!description.toLowerCase().includes('tree') && !description.toLowerCase().includes('plant')) {
       
@@ -222,8 +230,6 @@ function App() {
       })
     }
   }
-
-  
 
   return (
     <div className="App">
